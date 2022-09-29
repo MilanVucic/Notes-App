@@ -4,16 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteQuery;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
-import com.vucic.notesapp.models.DaoSession;
 import com.vucic.notesapp.models.Note;
-import com.vucic.notesapp.models.NoteDao;
-import com.vucic.notesapp.models.NotesAdapter;
 import com.vucic.notesapp.repository.NotesRepository;
 import com.vucic.notesapp.repository.RepositoryProvider;
 

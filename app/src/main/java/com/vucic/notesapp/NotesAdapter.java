@@ -1,4 +1,4 @@
-package com.vucic.notesapp.models;
+package com.vucic.notesapp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vucic.notesapp.AddNoteActivity;
-import com.vucic.notesapp.R;
+import com.vucic.notesapp.models.Note;
 import com.vucic.notesapp.repository.Tags;
 
 import java.util.List;

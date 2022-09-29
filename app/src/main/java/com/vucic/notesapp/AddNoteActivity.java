@@ -42,7 +42,7 @@ public class AddNoteActivity extends AppCompatActivity {
         if (noteId != NO_NOTE) {
             deleteButton.setOnClickListener(v -> deleteNote(noteId));
             deleteButton.setVisibility(View.VISIBLE);
-            note = notesRepository.getById(noteId);
+            note = notesRepository.getNoteById(noteId);
             updateUI(note);
         } else {
             deleteButton.setVisibility(View.INVISIBLE);
@@ -50,7 +50,7 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private void deleteNote(long noteId) {
-        notesRepository.delete(noteId);
+        notesRepository.deleteNote(noteId);
         Toast.makeText(this, "Deleted note", Toast.LENGTH_SHORT).show();
         finish();
     }
@@ -72,12 +72,12 @@ public class AddNoteActivity extends AppCompatActivity {
             note.setTitle(title);
             note.setDescription(description);
             note.setArchived(archiveCheckBox.isChecked());
-            notesRepository.add(note);
+            notesRepository.addNote(note);
         } else {
             note.setTitle(title);
             note.setDescription(description);
             note.setArchived(archiveCheckBox.isChecked());
-            notesRepository.edit(note);
+            notesRepository.editNote(note);
         }
         Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
         finish();
