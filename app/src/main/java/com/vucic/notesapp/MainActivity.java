@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.vucic.notesapp.adapters.NotesAdapter;
 import com.vucic.notesapp.models.Note;
 import com.vucic.notesapp.repository.NotesRepository;
 import com.vucic.notesapp.repository.RepositoryProvider;

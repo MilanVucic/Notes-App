@@ -8,9 +8,9 @@ import com.vucic.notesapp.models.Author;
 import com.vucic.notesapp.models.AuthorDao;
 import com.vucic.notesapp.models.DaoSession;
 import com.vucic.notesapp.models.Note;
+import com.vucic.notesapp.models.NoteColor;
+import com.vucic.notesapp.models.NoteColorDao;
 import com.vucic.notesapp.models.NoteDao;
-
-import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.List;
 
@@ -18,12 +18,16 @@ public class LocalRepository implements NotesRepository {
     private DaoSession daoSession;
     private NoteDao noteDao;
     private AuthorDao authorDao;
+    private NoteColorDao noteColorDao;
+    private Author loggedInUser;
     private static LocalRepository instance;
 
     private LocalRepository(Activity activity) {
-        daoSession = ((MyApp)activity.getApplication()).getDaoSession();
+        daoSession = ((MyApp) activity.getApplication()).getDaoSession();
         noteDao = daoSession.getNoteDao();
         authorDao = daoSession.getAuthorDao();
+        noteColorDao = daoSession.getNoteColorDao();
+        seedColorsIfNeeded();
     }
 
     public static LocalRepository getInstance(Activity activity) {
@@ -33,9 +37,34 @@ public class LocalRepository implements NotesRepository {
         return instance;
     }
 
+    private void seedColorsIfNeeded() {
+        List<NoteColor> noteColors = getNoteColors();
+        if (noteColors == null || noteColors.isEmpty()) {
+            NoteColor noteColor1 = new NoteColor();
+            noteColor1.setColorCode("#FFFFEB3B");
+            NoteColor noteColor2 = new NoteColor();
+            noteColor2.setColorCode("#FFE91E63");
+            NoteColor noteColor3 = new NoteColor();
+            noteColor3.setColorCode("#FFFF9800");
+            noteColorDao.insert(noteColor1);
+            noteColorDao.insert(noteColor2);
+            noteColorDao.insert(noteColor3);
+        }
+    }
+
+    @Override
+    public List<NoteColor> getNoteColors() {
+        return noteColorDao.getSession().loadAll(NoteColor.class);
+    }
+
+    public Author getLoggedInUser() {
+        return loggedInUser;
+    }
+
     @Override
     public void addNote(Note note) {
         noteDao.insert(note);
+        loggedInUser.getNotes().add(note);
     }
 
     @Override
@@ -50,7 +79,12 @@ public class LocalRepository implements NotesRepository {
 
     @Override
     public List<Note> getAllNotes() {
-        return noteDao.getSession().loadAll(Note.class);
+        return loggedInUser.getNotes();
+    }
+
+    @Override
+    public long getLoggedInUserId() {
+        return loggedInUser.getId();
     }
 
     @Override
@@ -72,6 +106,7 @@ public class LocalRepository implements NotesRepository {
             loginCallback.onFailure("Username not found.");
         } else {
             Author author = authors.get(0);
+            loggedInUser = author;
             if (author.getPassword().equals(password)) {
                 loginCallback.onSuccess();
             } else {

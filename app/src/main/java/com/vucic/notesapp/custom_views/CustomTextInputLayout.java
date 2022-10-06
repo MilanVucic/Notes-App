@@ -1,4 +1,4 @@
-package com.vucic.notesapp.custom_stuff;
+package com.vucic.notesapp.custom_views;
 
 import android.content.Context;
 import android.text.Editable;

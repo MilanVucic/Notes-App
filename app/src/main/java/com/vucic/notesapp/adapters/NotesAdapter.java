@@ -1,7 +1,8 @@
-package com.vucic.notesapp;
+package com.vucic.notesapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.vucic.notesapp.AddNoteActivity;
+import com.vucic.notesapp.R;
 import com.vucic.notesapp.models.Note;
 import com.vucic.notesapp.repository.Tags;
 
@@ -43,6 +46,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         } else {
             holder.archivedImageView.setVisibility(View.GONE);
         }
+        String colorCodeString = note.getNoteColor().getColorCode();
+        holder.containerLayout.setBackgroundColor(Color.parseColor(colorCodeString));
     }
 
     private void openNoteDetails(Long id) {

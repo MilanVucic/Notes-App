@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerLayout"
+    android:padding="12dp"
+    tools:background="@drawable/selected_item_background"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/colorView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:background="#FF9800"/>
+
+</FrameLayout>

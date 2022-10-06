@@ -16,6 +16,11 @@ public class Note {
     private String title;
     private String description;
     private boolean archived;
+
+    private long colorId;
+    @ToOne(joinProperty = "colorId")
+    private NoteColor noteColor;
+
     private long authorId;
     @ToOne(joinProperty = "authorId")
     private Author author;
@@ -31,13 +36,17 @@ public class Note {
     @Generated(hash = 1107320010)
     private transient Long author__resolvedKey;
 
-    @Generated(hash = 423435391)
-    public Note(Long id, @NotNull String title, String description,
-            boolean archived, long authorId) {
+    @Generated(hash = 2094086735)
+    private transient Long noteColor__resolvedKey;
+
+    @Generated(hash = 1391991253)
+    public Note(Long id, @NotNull String title, String description, boolean archived, long colorId,
+            long authorId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.archived = archived;
+        this.colorId = colorId;
         this.authorId = authorId;
     }
     @Generated(hash = 1272611929)
@@ -136,6 +145,43 @@ public class Note {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+    public long getColorId() {
+        return this.colorId;
+    }
+    public void setColorId(long colorId) {
+        this.colorId = colorId;
+    }
+    /** To-one relationship, resolved on first access. */
+    @Generated(hash = 664563526)
+    public NoteColor getNoteColor() {
+        long __key = this.colorId;
+        if (noteColor__resolvedKey == null || !noteColor__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            NoteColorDao targetDao = daoSession.getNoteColorDao();
+            NoteColor noteColorNew = targetDao.load(__key);
+            synchronized (this) {
+                noteColor = noteColorNew;
+                noteColor__resolvedKey = __key;
+            }
+        }
+        return noteColor;
+    }
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 1149212713)
+    public void setNoteColor(@NotNull NoteColor noteColor) {
+        if (noteColor == null) {
+            throw new DaoException(
+                    "To-one property 'colorId' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.noteColor = noteColor;
+            colorId = noteColor.getId();
+            noteColor__resolvedKey = colorId;
+        }
     }
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 799086675)

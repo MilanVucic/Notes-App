@@ -3,12 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_add_note.xml" value="0.264" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/drawable/selected_item_background.xml" value="0.1585" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_add_note.xml" value="0.6" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_login.xml" value="0.2" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_main.xml" value="0.72" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/activity_sign_up.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/color_selector_layout.xml" value="0.61" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/custom_view_layout.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/note_item_layout.xml" value="0.264" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/note_color_item_layout.xml" value="0.8800000000000001" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/NotesApp/app/src/main/res/layout/note_item_layout.xml" value="0.6" />
         <entry key="..\:/Users/Dell/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/btn_plus.xml" value="0.1585" />
       </map>
     </option>
