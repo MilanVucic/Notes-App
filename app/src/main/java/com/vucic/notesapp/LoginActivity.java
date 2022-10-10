@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.vucic.notesapp.callbacks.LoginCallback;
+import com.vucic.notesapp.custom_views.RoundedSectionProgressBar;
 import com.vucic.notesapp.repository.NotesRepository;
 import com.vucic.notesapp.repository.RepositoryProvider;
 

@@ -10,4 +10,7 @@
     <color name="filled_section_color">#FFFFFFFF</color>
     <color name="unfilled_section_color">#FFFFFFFF</color>
     <color name="extra_section_color">#FFFFFFFF</color>
+    <color name="color_1">#ED0000</color>
+    <color name="color_2">#0F57E6</color>
+    <color name="color_3">#0AFF00</color>
 </resources>

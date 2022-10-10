@@ -33,6 +33,21 @@
         android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/takePhotoButton"
+        app:layout_constraintTop_toBottomOf="@id/descriptionEditText"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Take photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/choosePhotoButton"
+        app:layout_constraintTop_toBottomOf="@id/descriptionEditText"
+        app:layout_constraintRight_toLeftOf="@id/takePhotoButton"
+        android:text="Choose photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
         android:id="@+id/deleteButton"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
@@ -65,5 +80,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/previewImageView"
+        app:layout_constraintTop_toBottomOf="@id/saveButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_width="@dimen/image_preview_size"
+        android:layout_height="@dimen/image_preview_size" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

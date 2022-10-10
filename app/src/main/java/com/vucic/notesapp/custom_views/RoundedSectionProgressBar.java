@@ -44,6 +44,9 @@ public class RoundedSectionProgressBar extends View {
     private void init(Context context, AttributeSet attrs) {
         // Can come from attrs if need be?
         int strokeWidth = 3;
+        setupPaint(context, strokeWidth, paint, R.color.color_1);
+        setupPaint(context, strokeWidth, waitingPaint, R.color.color_2);
+        setupPaint(context, strokeWidth, backgroundPaint, R.color.color_3);
     }
 
     private void setupPaint(Context context, int strokeWidth, Paint backgroundPaint, int colorRes) {
