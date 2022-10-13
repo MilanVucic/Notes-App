@@ -16,6 +16,7 @@ public class Note {
     private String title;
     private String description;
     private boolean archived;
+    private String photoPath;
 
     private long colorId;
     @ToOne(joinProperty = "colorId")
@@ -39,13 +40,14 @@ public class Note {
     @Generated(hash = 2094086735)
     private transient Long noteColor__resolvedKey;
 
-    @Generated(hash = 1391991253)
-    public Note(Long id, @NotNull String title, String description, boolean archived, long colorId,
-            long authorId) {
+    @Generated(hash = 32310574)
+    public Note(Long id, @NotNull String title, String description, boolean archived, String photoPath,
+            long colorId, long authorId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.archived = archived;
+        this.photoPath = photoPath;
         this.colorId = colorId;
         this.authorId = authorId;
     }
@@ -182,6 +184,12 @@ public class Note {
             colorId = noteColor.getId();
             noteColor__resolvedKey = colorId;
         }
+    }
+    public String getPhotoPath() {
+        return this.photoPath;
+    }
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 799086675)

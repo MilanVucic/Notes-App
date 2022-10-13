@@ -34,4 +34,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <ImageView
+        android:id="@+id/hasPhotoImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@android:drawable/ic_menu_gallery"
+        app:layout_constraintRight_toLeftOf="@id/archivedImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

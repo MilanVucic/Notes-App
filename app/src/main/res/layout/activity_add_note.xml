@@ -90,4 +90,22 @@
         android:layout_width="@dimen/image_preview_size"
         android:layout_height="@dimen/image_preview_size" />
 
+    <ImageView
+        android:id="@+id/removeImageView"
+        app:layout_constraintTop_toTopOf="@id/previewImageView"
+        app:layout_constraintBottom_toTopOf="@id/previewImageView"
+        app:layout_constraintRight_toRightOf="@id/previewImageView"
+        app:layout_constraintLeft_toRightOf="@id/previewImageView"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/photoGroup"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="previewImageView, removeImageView"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,6 +21,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
@@ -46,6 +49,8 @@ public class AddNoteActivity extends AppCompatActivity implements ColorSelectedC
     private EditText descriptionEditText;
     private CheckBox archiveCheckBox;
     private ImageView previewImageView;
+    private ImageView removeImageView;
+    private Group photoGroup;
 
     private NotesRepository notesRepository;
     private long noteId;
@@ -61,6 +66,7 @@ public class AddNoteActivity extends AppCompatActivity implements ColorSelectedC
                     Toast.makeText(this, "Permission not granted", Toast.LENGTH_SHORT).show();
                 }
             });
+    private Uri photoURI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,8 @@ public class AddNoteActivity extends AppCompatActivity implements ColorSelectedC
         descriptionEditText = findViewById(R.id.descriptionEditText);
         archiveCheckBox = findViewById(R.id.archiveCheckBox);
         previewImageView = findViewById(R.id.previewImageView);
+        removeImageView = findViewById(R.id.removeImageView);
+        photoGroup = findViewById(R.id.photoGroup);
 
         List<NoteColor> noteColors = notesRepository.getNoteColors();
         List<NoteColorViewModel> viewModels = createViewModels(noteColors);
@@ -94,6 +102,12 @@ public class AddNoteActivity extends AppCompatActivity implements ColorSelectedC
         colorSelector.setCallback(this);
         colorSelector.initializeColors(viewModels);
         findViewById(R.id.takePhotoButton).setOnClickListener(v -> checkProperPermissions());
+        removeImageView.setOnClickListener(v -> removeImage());
+    }
+
+    private void removeImage() {
+        currentPhotoPath = null;
+        photoGroup.setVisibility(View.GONE);
     }
 
     private void checkProperPermissions() {
@@ -110,10 +124,37 @@ public class AddNoteActivity extends AppCompatActivity implements ColorSelectedC
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Bitmap imageBitmap = getImageFromURI(photoURI);
             previewImageView.setImageBitmap(imageBitmap);
+            photoGroup.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Nullable
+    private Bitmap getImageFromURI(Uri photoURI) {
+        Bitmap imageBitmap = null;
+        try {
+            imageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoURI);
+        } catch (IOException e) {
+            Toast.makeText(this, "Something went wrong. Try again later.", Toast.LENGTH_SHORT).show();
+        }
+        return imageBitmap;
+    }
+
+    private void galleryAddPic() {
+        MediaScannerConnection mediaScannerConnection =
+                new MediaScannerConnection(this, new MediaScannerConnection.MediaScannerConnectionClient() {
+            @Override
+            public void onMediaScannerConnected() {
+
+            }
+
+            @Override
+            public void onScanCompleted(String path, Uri uri) {
+                Toast.makeText(AddNoteActivity.this, "Scan completed.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mediaScannerConnection.scanFile(currentPhotoPath, null);
     }
 
     private void dispatchTakePictureIntent() {
@@ -129,9 +170,8 @@ public class AddNoteActivity extends AppCompatActivity implements ColorSelectedC
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
+                photoURI = FileProvider.getUriForFile(this,
+                        "com.vucic.notesapp", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
@@ -182,6 +222,20 @@ public class AddNoteActivity extends AppCompatActivity implements ColorSelectedC
             titleEditText.setText(note.getTitle());
             descriptionEditText.setText(note.getDescription());
             archiveCheckBox.setChecked(note.getArchived());
+            if (!TextUtils.isEmpty(note.getPhotoPath())) {
+                currentPhotoPath = note.getPhotoPath();
+
+                File file = new File(note.getPhotoPath());
+                if (file.exists()) {
+                    photoURI = FileProvider.getUriForFile(this,
+                            "com.vucic.notesapp", file);
+                    Bitmap imageBitmap = getImageFromURI(photoURI);
+                    previewImageView.setImageBitmap(imageBitmap);
+                }
+                photoGroup.setVisibility(View.VISIBLE);
+            } else {
+                photoGroup.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -201,12 +255,14 @@ public class AddNoteActivity extends AppCompatActivity implements ColorSelectedC
             note.setArchived(archiveCheckBox.isChecked());
             note.setAuthorId(notesRepository.getLoggedInUserId());
             note.setColorId(selectedColor.getNoteColor().getId());
+            note.setPhotoPath(currentPhotoPath);
             notesRepository.addNote(note);
         } else {
             note.setTitle(title);
             note.setDescription(description);
             note.setArchived(archiveCheckBox.isChecked());
             note.setColorId(selectedColor.getNoteColor().getId());
+            note.setPhotoPath(currentPhotoPath);
             notesRepository.editNote(note);
         }
         Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
