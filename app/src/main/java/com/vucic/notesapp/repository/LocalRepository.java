@@ -90,6 +90,7 @@ public class LocalRepository implements NotesRepository {
     @Override
     public void deleteNote(long id) {
         Note note = getNoteById(id);
+        loggedInUser.getNotes().remove(note);
         noteDao.delete(note);
     }
 

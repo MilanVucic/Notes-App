@@ -271,6 +271,6 @@ public class AddNoteActivity extends AppCompatActivity implements ColorSelectedC
 
     @Override
     public void onColorSelected(NoteColor noteColor) {
-        Toast.makeText(this, "You selected:" + noteColor.getColorCode(), Toast.LENGTH_SHORT).show();
+
     }
 }
