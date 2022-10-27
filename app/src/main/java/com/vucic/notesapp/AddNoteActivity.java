@@ -1,11 +1,13 @@
 package com.vucic.notesapp;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -102,7 +105,28 @@ public class AddNoteActivity extends AppCompatActivity implements ColorSelectedC
         colorSelector.setCallback(this);
         colorSelector.initializeColors(viewModels);
         findViewById(R.id.takePhotoButton).setOnClickListener(v -> checkProperPermissions());
+        findViewById(R.id.choosePhotoButton).setOnClickListener(v -> choosePhotoFromGallery());
         removeImageView.setOnClickListener(v -> removeImage());
+    }
+
+    // TODO: 27-Oct-22 Doesnt work, fix; upgrade gradle files to use this library
+    private void choosePhotoFromGallery() {
+        // Registers a photo picker activity launcher in single-select mode.
+        ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                    // Callback is invoked after the user selects a media item or closes the
+                    // photo picker.
+                    if (uri != null) {
+
+                    } else {
+
+                    }
+                });
+
+// Launch the photo picker and allow the user to choose only images.
+        pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(new ActivityResultContracts.PickVisualMedia.SingleMimeType("image/gif"))
+                .build());
     }
 
     private void removeImage() {
